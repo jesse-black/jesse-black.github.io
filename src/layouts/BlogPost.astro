@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { BLOG_SOURCE_URL, DISCUSSIONS_URL } from '../consts';
+
+type Props = CollectionEntry<'blog'>['data'] & { id?: string; body?: string };
+
+const { title, description, pubDate, updatedDate, heroImage, id, body } = Astro.props;
+const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+			.post-actions {
+				display: flex;
+				gap: 0.75em;
+				margin: 0.5em 0 0;
+				justify-content: center;
+			}
+			.post-actions a,
+			.post-actions button {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4em;
+				font-size: 0.875em;
+				color: rgb(var(--gray));
+				text-decoration: none;
+				background: none;
+				border: none;
+				cursor: pointer;
+				padding: 0;
+				font-family: inherit;
+			}
+			.post-actions a:hover,
+			.post-actions button:hover {
+				color: rgb(var(--gray-dark));
+			}
+			.discussion-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.4em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						<div class="post-actions">
+							{githubSourceUrl && (
+							<a href={githubSourceUrl} target="_blank" rel="noopener noreferrer">
+								<Icon name="simple-icons:github" width="16" height="16" aria-hidden="true" />
+								View on GitHub
+							</a>
+						)}
+							<button id="copy-btn" data-body={body}>
+								<Icon name="lucide:copy" width="16" height="16" aria-hidden="true" />
+								<span>Copy page</span>
+							</button>
+						</div>
+						<hr />
+					</div>
+					<slot />
+					<hr />
+					<p>
+						<a href={DISCUSSIONS_URL} class="discussion-link">
+							<Icon name="simple-icons:github" width="20" height="20" aria-hidden="true" />
+							Join the discussion
+						</a>
+					</p>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<script>
+	const btn = document.getElementById('copy-btn');
+	if (btn) {
+		btn.addEventListener('click', async () => {
+			const body = btn.dataset.body ?? '';
+			await navigator.clipboard.writeText(body);
+			const label = btn.querySelector('span')!;
+			label.textContent = 'Copied!';
+			setTimeout(() => { label.textContent = 'Copy page'; }, 2000);
+		});
+	}
+</script>
