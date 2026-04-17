@@ -1,11 +1,11 @@
 ---
-import { SOCIAL_LINKS } from '../consts';
+import { AUTHOR_NAME, SOCIAL_LINKS } from '../consts';
 import { Icon } from 'astro-icon/components';
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} Your name here. All rights reserved.
+	&copy; {today.getFullYear()} {AUTHOR_NAME}. All rights reserved.
 	<div class="social-links">
 		{SOCIAL_LINKS.map(({ href, label, icon }) => (
 			<a href={href} target="_blank">

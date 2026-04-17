@@ -7,7 +7,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { BLOG_SOURCE_URL, DISCUSSIONS_URL } from '../consts';
+import { AUTHOR_NAME, BLOG_SOURCE_URL, DISCUSSIONS_URL, GITHUB_PROFILE_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { id?: string; body?: string; slug?: string };
 
@@ -64,6 +64,16 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 				margin: 0.75em 0 0.25em;
 				font-size: 0.9em;
 				color: rgb(var(--gray-light));
+			}
+			.byline a {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				color: inherit;
+				text-decoration: none;
+			}
+			.byline a:hover {
+				color: var(--accent);
 			}
 			.byline img {
 				width: 32px;
@@ -124,8 +134,10 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 						</div>
 						<h1>{title}</h1>
 						<div class="byline">
-							<Image src={portrait} width={64} height={64} alt="Jesse Black" />
-							Jesse Black
+							<a href={GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer">
+								<Image src={portrait} width={64} height={64} alt={AUTHOR_NAME} />
+								{AUTHOR_NAME}
+							</a>
 						</div>
 						<div class="post-actions">
 							{githubSourceUrl && (
