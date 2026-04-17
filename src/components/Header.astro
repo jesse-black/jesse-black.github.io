@@ -1,17 +1,11 @@
 ---
 import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
-import HeaderLink from './HeaderLink.astro';
 import { Icon } from 'astro-icon/components';
 ---
 
 <header>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
 		<div class="social-links">
 			{SOCIAL_LINKS.map(({ href, label, icon }) => (
 				<a href={href} target="_blank">

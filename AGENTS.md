@@ -32,6 +32,7 @@ public/          # Copied verbatim to build output (favicons, etc.)
 pnpm dev        # Start dev server at localhost:4321
 pnpm build      # Build to ./dist/
 pnpm preview    # Preview the production build locally
+pnpm check      # Run type checks and diagnostics
 ```
 
 ## Writing blog posts

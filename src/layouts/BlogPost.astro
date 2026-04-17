@@ -2,21 +2,22 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import portrait from '../assets/portrait.jpg';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { BLOG_SOURCE_URL, DISCUSSIONS_URL } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'] & { id?: string; body?: string };
+type Props = CollectionEntry<'blog'>['data'] & { id?: string; body?: string; slug?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, id, body } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, id, body, slug } = Astro.props;
 const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} ogImage={slug ? `/og/${slug}.png` : undefined} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -54,6 +55,21 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 			}
 			.last-updated-on {
 				font-style: italic;
+			}
+			.byline {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5em;
+				margin: 0.75em 0 0.25em;
+				font-size: 0.9em;
+				color: rgb(var(--gray-dark));
+			}
+			.byline img {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				object-fit: cover;
 			}
 			.post-actions {
 				display: flex;
@@ -107,6 +123,10 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 							}
 						</div>
 						<h1>{title}</h1>
+						<div class="byline">
+							<Image src={portrait} width={64} height={64} alt="Jesse Black" />
+							Jesse Black
+						</div>
 						<div class="post-actions">
 							{githubSourceUrl && (
 							<a href={githubSourceUrl} target="_blank" rel="noopener noreferrer">
