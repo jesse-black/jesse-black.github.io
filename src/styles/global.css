@@ -6,13 +6,13 @@
 
 :root {
 	--accent: #6470ff;
-	--accent-dark: #9ba5ff;
+	--accent-light: #9ba5ff;
 	--black: 232, 230, 245;
 	--gray: 130, 145, 175;
-	--gray-light: 30, 35, 52;
-	--gray-dark: 200, 208, 228;
+	--gray-dark: 30, 35, 52;
+	--gray-light: 200, 208, 228;
 	--bg: #0d1017;
-	--gray-gradient: rgba(var(--gray-light), 80%), var(--bg);
+	--gray-gradient: rgba(var(--gray-dark), 80%), var(--bg);
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
@@ -27,7 +27,7 @@ body {
 	background-color: var(--bg);
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
+	color: rgb(var(--gray-light));
 	font-size: 20px;
 	line-height: 1.7;
 }
@@ -95,7 +95,7 @@ img {
 }
 code {
 	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
+	background-color: rgb(var(--gray-dark));
 	border-radius: 2px;
 }
 pre {
@@ -113,7 +113,7 @@ blockquote {
 }
 hr {
 	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
+	border-top: 1px solid rgb(var(--gray-dark));
 }
 @media (max-width: 720px) {
 	body {
