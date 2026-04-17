@@ -148,7 +148,7 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 						)}
 							<button id="copy-btn" data-body={body}>
 								<Icon name="lucide:copy" width="16" height="16" aria-hidden="true" />
-								<span>Copy page</span>
+								<span>Copy markdown</span>
 							</button>
 						</div>
 						<hr />
@@ -176,7 +176,7 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 			await navigator.clipboard.writeText(body);
 			const label = btn.querySelector('span')!;
 			label.textContent = 'Copied!';
-			setTimeout(() => { label.textContent = 'Copy page'; }, 2000);
+			setTimeout(() => { label.textContent = 'Copy markdown'; }, 2000);
 		});
 	}
 </script>

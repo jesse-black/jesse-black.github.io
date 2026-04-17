@@ -7,7 +7,7 @@
 :root {
 	--accent: #6470ff;
 	--accent-light: #9ba5ff;
-	--black: 232, 230, 245;
+	--white: 232, 230, 245;
 	--gray: 130, 145, 175;
 	--gray-dark: 30, 35, 52;
 	--gray-light: 200, 208, 228;
@@ -44,7 +44,7 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
+	color: rgb(var(--white));
 	line-height: 1.2;
 }
 h1 {
