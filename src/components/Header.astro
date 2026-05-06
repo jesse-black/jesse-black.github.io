@@ -1,11 +1,18 @@
 ---
 import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.jpg';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2 class="logo">
+			<a href="/">
+				<Image src={portrait} alt="" width={40} height={40} class="portrait" />
+				{SITE_TITLE}
+			</a>
+		</h2>
 		<div class="social-links">
 			{SOCIAL_LINKS.map(({ href, label, icon }) => (
 				<a href={href} target="_blank" rel="noopener noreferrer">
@@ -22,10 +29,22 @@ import { Icon } from 'astro-icon/components';
 		padding: 0 1em;
 		background: var(--bg);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 40%);
+		font-size: 20px;
 	}
 	h2 {
 		margin: 0;
 		font-size: 1em;
+	}
+
+	h2.logo a {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.5em 0;
+	}
+
+	.portrait {
+		border-radius: 999px;
 	}
 
 	h2 a,
@@ -52,6 +71,9 @@ import { Icon } from 'astro-icon/components';
 		display: flex;
 	}
 	@media (max-width: 720px) {
+		header {
+			font-size: 18px;
+		}
 		.social-links {
 			display: none;
 		}
