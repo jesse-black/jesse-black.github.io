@@ -1,0 +1,11 @@
+{
+  "context": {
+    "fileName": [
+      "GEMINI.md",
+      "AGENTS.md"
+    ]
+  },
+  "ui": {
+    "inlineThinkingMode": "full"
+  }
+}
