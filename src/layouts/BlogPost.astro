@@ -81,35 +81,47 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 				border-radius: 50%;
 				object-fit: cover;
 			}
-			.post-actions {
-				display: flex;
-				gap: 0.75em;
-				margin: 0.5em 0 0;
-				justify-content: center;
-			}
-			.post-actions a,
-			.post-actions button {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.4em;
-				font-size: 0.875em;
-				color: rgb(var(--gray));
-				text-decoration: none;
-				background: none;
-				border: none;
-				cursor: pointer;
-				padding: 0;
-				font-family: inherit;
-			}
-			.post-actions a:hover,
-			.post-actions button:hover {
-				color: rgb(var(--gray-light));
-			}
-			.discussion-link {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.4em;
-			}
+				.post-actions {
+					display: flex;
+					gap: 0.75em;
+					margin: 0.5em 0 0;
+					justify-content: center;
+				}
+				.post-actions a,
+				.post-actions button {
+					display: inline-flex;
+					align-items: center;
+					gap: 0.4em;
+					font-size: 0.875em;
+					color: rgb(var(--gray));
+					text-decoration: none;
+					background: none;
+					border: none;
+					cursor: pointer;
+					padding: 0;
+					font-family: inherit;
+				}
+				.post-actions a:hover,
+				.post-actions button:hover {
+					color: rgb(var(--gray-light));
+				}
+				.post-actions button.copied {
+					color: rgb(var(--white));
+				}
+				.post-actions button .copy-feedback__icon--check {
+					display: none;
+				}
+				.post-actions button.copied .copy-feedback__icon--copy {
+					display: none;
+				}
+				.post-actions button.copied .copy-feedback__icon--check {
+					display: inline-flex;
+				}
+				.discussion-link {
+					display: inline-flex;
+					align-items: center;
+					gap: 0.4em;
+				}
 		</style>
 	</head>
 
@@ -146,11 +158,24 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 								View on GitHub
 							</a>
 						)}
-							<button id="copy-btn" data-body={body}>
-								<Icon name="lucide:copy" width="16" height="16" aria-hidden="true" />
-								<span>Copy markdown</span>
-							</button>
-						</div>
+								<button
+									id="copy-btn"
+									data-copy-source="markdown"
+									data-copy-text={body ?? ''}
+									data-default-label="Copy markdown"
+									data-copied-label="Copied!"
+									aria-label="Copy markdown"
+									type="button"
+								>
+									<span class="copy-feedback__icon copy-feedback__icon--copy">
+										<Icon name="lucide:copy" width="16" height="16" aria-hidden="true" />
+									</span>
+									<span class="copy-feedback__icon copy-feedback__icon--check">
+										<Icon name="lucide:check" width="16" height="16" aria-hidden="true" />
+									</span>
+									<span data-copy-label>Copy markdown</span>
+								</button>
+							</div>
 						<hr />
 					</div>
 					<slot />
@@ -169,14 +194,60 @@ const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 </html>
 
 <script>
-	const btn = document.getElementById('copy-btn');
-	if (btn) {
-		btn.addEventListener('click', async () => {
-			const body = btn.dataset.body ?? '';
-			await navigator.clipboard.writeText(body);
-			const label = btn.querySelector('span')!;
-			label.textContent = 'Copied!';
-			setTimeout(() => { label.textContent = 'Copy markdown'; }, 2000);
-		});
+	const copyResetTimers = new WeakMap<HTMLButtonElement, number>();
+
+	function setCopiedState(button: HTMLButtonElement) {
+		const label = button.querySelector('[data-copy-label]');
+		if (!(label instanceof HTMLElement)) return;
+
+		const existingTimer = copyResetTimers.get(button);
+		if (existingTimer) {
+			window.clearTimeout(existingTimer);
+		}
+
+		button.classList.add('copied');
+		label.textContent = button.dataset.copiedLabel ?? 'Copied!';
+
+		const resetTimer = window.setTimeout(() => {
+			button.classList.remove('copied');
+			label.textContent = button.dataset.defaultLabel ?? 'Copy';
+			copyResetTimers.delete(button);
+		}, 2000);
+
+		copyResetTimers.set(button, resetTimer);
 	}
+
+	document.querySelectorAll('.code-block').forEach((block) => {
+		if (!(block instanceof HTMLElement)) return;
+
+		const pre = block.querySelector('pre');
+		const label = block.querySelector('.code-block-language');
+		const button = block.querySelector('.copy-code-button');
+		const lang = pre?.getAttribute('data-language');
+
+		if (lang && label instanceof HTMLElement) {
+			label.textContent = lang;
+		}
+
+		if (lang && button instanceof HTMLButtonElement) {
+			button.setAttribute('aria-label', `Copy ${lang} code`);
+		}
+	});
+
+	document.querySelectorAll('[data-copy-source]').forEach((button) => {
+		if (!(button instanceof HTMLButtonElement)) return;
+
+		button.addEventListener('click', async () => {
+			let text = button.dataset.copyText ?? '';
+
+			if (button.dataset.copySource === 'code') {
+				const code = button.closest('.code-block')?.querySelector('pre code');
+				if (!(code instanceof HTMLElement)) return;
+				text = code.innerText;
+			}
+
+			await navigator.clipboard.writeText(text);
+			setCopiedState(button);
+		});
+	});
 </script>
