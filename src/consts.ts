@@ -23,4 +23,9 @@ export const SOCIAL_LINKS: { href: string; label: string; icon: string }[] = [
 		label: `Go to ${AUTHOR_NAME}'s Instagram`,
 		icon: 'simple-icons:instagram',
 	},
+	{
+		href: '/rss.xml',
+		label: 'RSS Feed',
+		icon: 'simple-icons:rss',
+	},
 ];
