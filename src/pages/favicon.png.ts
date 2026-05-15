@@ -1,11 +1,10 @@
 import type { APIRoute } from 'astro';
 import sharp from 'sharp';
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { resolve } from 'node:path';
 
 export const GET: APIRoute = async () => {
-	const portraitPath = fileURLToPath(new URL('../assets/portrait.jpg', import.meta.url));
-	const portraitData = readFileSync(portraitPath);
+	const portraitData = readFileSync(resolve(process.cwd(), 'src/assets/portrait.jpg'));
 
 	const size = 128;
 	const mask = Buffer.from(
