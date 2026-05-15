@@ -4,6 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import portrait from '../assets/portrait.jpg';
 import BaseHead from '../components/BaseHead.astro';
+import Comments from '../components/Comments.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
@@ -11,13 +12,12 @@ import {
 	AUTHOR_NAME,
 	BLOG_RAW_SOURCE_URL,
 	BLOG_SOURCE_URL,
-	DISCUSSIONS_URL,
 	GITHUB_PROFILE_URL,
 } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { id?: string; body?: string; slug?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, id, body, slug } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, id, slug } = Astro.props;
 const githubSourceUrl = id ? `${BLOG_SOURCE_URL}/${id}` : null;
 const githubRawSourceUrl = id ? `${BLOG_RAW_SOURCE_URL}/${id}` : null;
 ---
@@ -124,11 +124,6 @@ const githubRawSourceUrl = id ? `${BLOG_RAW_SOURCE_URL}/${id}` : null;
 				.post-actions button.copied .copy-feedback__icon--check {
 					display: inline-flex;
 				}
-				.discussion-link {
-					display: inline-flex;
-					align-items: center;
-					gap: 0.4em;
-				}
 		</style>
 	</head>
 
@@ -187,12 +182,7 @@ const githubRawSourceUrl = id ? `${BLOG_RAW_SOURCE_URL}/${id}` : null;
 					</div>
 					<slot />
 					<hr />
-					<p>
-						<a href={DISCUSSIONS_URL} class="discussion-link">
-							<Icon name="simple-icons:github" width="20" height="20" aria-hidden="true" />
-							Join the discussion
-						</a>
-					</p>
+					<Comments />
 				</div>
 			</article>
 		</main>

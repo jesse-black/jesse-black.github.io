@@ -1,0 +1,39 @@
+---
+import {
+	GISCUS_CATEGORY,
+	GISCUS_CATEGORY_ID,
+	GISCUS_REPO_ID,
+	GITHUB_REPO,
+} from '../consts';
+---
+
+<section class="comments" aria-labelledby="comments-title">
+	<h2 id="comments-title">Discussion</h2>
+	<giscus-widget
+		repo={GITHUB_REPO}
+		repoid={GISCUS_REPO_ID}
+		category={GISCUS_CATEGORY}
+		categoryid={GISCUS_CATEGORY_ID}
+		mapping="pathname"
+		strict="0"
+		reactionsenabled="1"
+		emitmetadata="0"
+		inputposition="bottom"
+		theme="dark"
+		lang="en"
+		loading="lazy"
+	/>
+</section>
+
+<style>
+	.comments {
+		margin-top: 2rem;
+	}
+	.comments h2 {
+		font-size: 1.25rem;
+	}
+</style>
+
+<script>
+	import 'giscus';
+</script>
