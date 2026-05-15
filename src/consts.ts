@@ -7,9 +7,7 @@ export const AUTHOR_NAME = 'Jesse Black';
 export const GITHUB_PROFILE_URL = 'https://github.com/jesse-black';
 
 export const GITHUB_REPO = 'jesse-black/jesse-black.github.io';
-export const GITHUB_REPO_URL = `https://github.com/${GITHUB_REPO}`;
-export const DISCUSSIONS_URL = `${GITHUB_REPO_URL}/discussions`;
-export const BLOG_SOURCE_URL = `${GITHUB_REPO_URL}/blob/main/src/content/blog`;
+export const BLOG_SOURCE_URL = `https://github.com/${GITHUB_REPO}/blob/main/src/content/blog`;
 export const BLOG_RAW_SOURCE_URL = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/src/content/blog`;
 
 export const GISCUS_REPO_ID = 'MDEwOlJlcG9zaXRvcnkxNTU0MzU1OTI=';
