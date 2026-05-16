@@ -18,70 +18,12 @@ jobs:
         id: post
         env:
           TAG: ${{ github.ref_name }}
-        run: |
-          SLUG="${TAG#post/}"
-
-          FILE=""
-          for EXT in md mdx; do
-            CANDIDATE="src/content/blog/${SLUG}.${EXT}"
-            if [ -f "$CANDIDATE" ]; then
-              FILE="$CANDIDATE"
-              break
-            fi
-          done
-
-          if [ -z "$FILE" ]; then
-            echo "::error::No blog post found for slug '${SLUG}' (tried .md and .mdx)"
-            exit 1
-          fi
-
-          python3 - "$FILE" "$SLUG" <<'PYEOF'
-          import sys, re, os
-
-          filepath, slug = sys.argv[1], sys.argv[2]
-          content = open(filepath).read()
-
-          m = re.match(r'^---\n(.*?)\n---', content, re.DOTALL)
-          if not m:
-              print("::error::No frontmatter found in " + filepath, file=sys.stderr)
-              sys.exit(1)
-
-          fm = {}
-          for line in m.group(1).splitlines():
-              match = re.match(r"^(\w+):\s*['\"]?(.*?)['\"]?\s*$", line)
-              if match:
-                  fm[match.group(1)] = match.group(2)
-
-          out = os.environ['GITHUB_OUTPUT']
-          with open(out, 'a') as f:
-              f.write(f"slug={slug}\n")
-              f.write(f"title={fm.get('title', slug)}\n")
-              f.write(f"description={fm.get('description', '')}\n")
-              f.write(f"pub_date={fm.get('pubDate', '')}\n")
-          PYEOF
-
-      - name: Build release notes
-        env:
-          SLUG: ${{ steps.post.outputs.slug }}
-          DESCRIPTION: ${{ steps.post.outputs.description }}
-          PUB_DATE: ${{ steps.post.outputs.pub_date }}
-        run: |
-          URL="https://jesseblack.net/blog/${SLUG}/"
-          cat > /tmp/release-notes.md << EOF
-          **[Read on jesseblack.net →](${URL})**
-
-          ---
-
-          > ${DESCRIPTION}
-
-          Published: ${PUB_DATE}
-          EOF
+        run: python3 .github/scripts/release.py /tmp/release-notes.md
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-          TITLE: ${{ steps.post.outputs.title }}
         run: |
           gh release create "${{ github.ref_name }}" \
-            --title "${TITLE}" \
+            --title "${{ steps.post.outputs.title }}" \
             --notes-file /tmp/release-notes.md
