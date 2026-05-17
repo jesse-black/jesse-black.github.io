@@ -1,4 +1,4 @@
-# jesse-black.github.io
+# jesseblack.net
 
 My blog at [jesseblack.net](https://jesseblack.net).
 
