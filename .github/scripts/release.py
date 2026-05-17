@@ -3,7 +3,7 @@ import re
 import sys
 
 tag = os.environ['TAG']
-slug = tag.removeprefix('post/')
+slug = tag
 notes_file = sys.argv[1]
 
 file_path = None

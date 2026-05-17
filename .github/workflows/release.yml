@@ -3,7 +3,7 @@ name: Create Post Release
 on:
   push:
     tags:
-      - 'post/**'
+      - '*'
 
 permissions:
   contents: write
