@@ -84,7 +84,7 @@ def render_blog_posts(items: Iterable[BlogPost]) -> str:
     blocks = []
     for post in items:
         date = post.published.strftime("%Y-%m-%d")
-        blocks.append(f"### [{post.title}]({post.url})\n_{date}_\n{post.description}")
+        blocks.append(f"### [{post.title}]({post.url})\n_{date}_\n\n{post.description}")
     if not blocks:
         return "_No recent posts found._"
     return "\n\n".join(blocks)
