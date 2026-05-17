@@ -1,4 +1,4 @@
-# jesse-black.github.io
+# jesseblack.net
 
 Personal blog for [jesseblack.net](https://jesseblack.net), built with Astro and deployed via GitHub Pages from a public repository.
 

@@ -39,7 +39,7 @@ for filepath in (
 posts.sort(reverse=True)
 
 lines = [
-    '# jesse-black.github.io',
+    '# jesseblack.net',
     '',
     'My blog at [jesseblack.net](https://jesseblack.net).',
     '',
