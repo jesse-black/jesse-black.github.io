@@ -23,6 +23,8 @@
     "astro-icon": "^1.1.5",
     "giscus": "^1.6.0",
     "hastscript": "^9.0.1",
+    "markdown-it": "^14.1.1",
+    "sanitize-html": "^2.17.4",
     "satori": "^0.26.0",
     "sharp": "^0.34.3",
     "unist-util-visit": "^5.1.0"
