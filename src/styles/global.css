@@ -107,11 +107,12 @@ pre,
 }
 pre {
 	padding: 1.5em;
-	overflow-x: auto;
+	overflow-x: hidden !important;
 }
 pre > code {
 	display: block;
-	white-space: normal;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
 }
 .code-block {
 	overflow: hidden;
@@ -124,8 +125,7 @@ pre > code {
 	background-color: transparent !important;
 }
 .code-block pre > code .line {
-	display: block;
-	white-space: pre;
+	overflow-wrap: anywhere;
 }
 .code-block-header {
 	display: flex;
