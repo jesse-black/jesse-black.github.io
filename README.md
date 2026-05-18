@@ -1,6 +1,6 @@
 # jesseblack.net
 
-My blog at [jesseblack.net](https://jesseblack.net).
+My blog at [jesseblack.net](https://jesseblack.net). Built with [Astro](https://astro.build/), with discussions powered by [Giscus](https://giscus.app/) and [GitHub Discussions](https://github.com/jesse-black/jesseblack.net/discussions).
 
 ## Recent posts
 
