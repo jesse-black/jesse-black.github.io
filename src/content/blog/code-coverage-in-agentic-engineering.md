@@ -1,7 +1,7 @@
 ---
 title: 'Code Coverage in Agentic Engineering'
 description: 'Coding agents make it easy to generate tests, but chasing 100% line coverage can waste tokens, churn out low-value tests, and distort code. Here’s how I use diff coverage, targeted metrics, and review guardrails to keep coverage useful.'
-pubDate: 'May 16 2026'
+pubDate: '2026-05-16T22:17:04-05:00'
 ---
 100% code coverage? 
 
